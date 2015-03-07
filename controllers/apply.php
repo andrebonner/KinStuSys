@@ -2,11 +2,17 @@
 
 class Apply extends Controller{
 
+	/**
+	 * Initializing Apply Controller
+	 **/
 	function __construct(){
 		parent::__construct();
 		//print "Index Page";
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	function index(){
 		
 		$this->view->data=array('title'=>'Application', 'description'=>'This is the Application page');
@@ -15,6 +21,9 @@ class Apply extends Controller{
 		$this->view->render("apply/index",true);
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	function run(){
 			// upload photo to server
 			//$data['photo'] = $_FILES['photo_upload'];
@@ -28,12 +37,15 @@ class Apply extends Controller{
 			$data['contact'] = $_POST['contact_areacode'].$_POST['contact_prefix'].$_POST['contact_line'];
 			$data['comment'] = $_POST['comment'];
 			
-			// @TODO: Do your error checking!
+			// @TODO: Do error checking!
 			
 			$this->model->run($data);
 			header('Location: '.URL.'/apply');
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	function applicantList(){
 		$this->view->applicant = $this->model->applicantList();
 		$this->view->data=array('title'=>'Applicants', 'description'=>'This is the students page');

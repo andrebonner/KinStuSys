@@ -1,12 +1,19 @@
 <?php
 
 class Login_Model extends Model{
-	
+		
+	/**
+	 * Initializing Login Model
+	 **/
 	public function __construct(){
 		//print 111;
 		parent::__construct();
 				
 	}
+	
+	/**
+	 * @return nothing
+	 **/
 	public function run(){
 		//$login 		= $_POST['login'];
 		$password 	= Hash::create('md5',$_POST['password'],HASH_PASSWORD_KEY);

@@ -1,10 +1,18 @@
 <?php
 class Controller{
+	
+	/**
+	 * Initializing Controller with view
+	 **/
 	function __construct(){
 		//print "Controller Main<br/>";
 			$this->view = new View();
 	}
 	
+	/**
+	 * @param string $name The model name to load
+	 * @return nothing
+	 **/
 	function loadModel($name){
 		$path = 'models/'.$name.'_model.php';
 		
@@ -16,6 +24,9 @@ class Controller{
 		}
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	function run(){
 		$this->model->run();
 	}

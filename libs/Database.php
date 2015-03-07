@@ -2,12 +2,20 @@
 
 class Database extends PDO {
 	
+	/**
+	 * Initializing database to mysql PDO
+	 **/
 	public function __construct(){
 		parent::__construct(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASS);
 		//print 'dbtest';
 	}
 
-	public function select($sql, $array, $fetchMode = PDO::FETCH_ASSOC){
+	/**
+	 * @param string $sql
+	 * @param string $data
+	 * @return nothing
+	 **/
+	public function select($sql, $data, $fetchMode = PDO::FETCH_ASSOC){
 		$sth = $this->prepare($sql);
 		
 		foreach($data as $key => $value){
@@ -18,6 +26,11 @@ class Database extends PDO {
 		
 	}
 	
+	/**
+	 * @param string $table The table to insert into
+	 * @param array $data The array of fields to insert
+	 * @return nothing
+	 **/
 	public function insert($table, $data){
 		
 		ksort($data);
@@ -34,6 +47,12 @@ class Database extends PDO {
 		$sth->execute();
 	}
 	
+	/**
+	 * @param string $table The table being updated
+	 * @param array $data The array of fields to update
+	 * @param string $where The where clause of criteria
+	 * @return nothing
+	 **/
 	public function update($table, $data, $where){
 		ksort($data);
 		

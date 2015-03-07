@@ -2,18 +2,26 @@
 
 class Login extends Controller{
 
+	/**
+	 * Initializing Login Controller
+	 **/
 	function __construct(){
 		parent::__construct();
 		//print "Login Page";
 		
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	function index(){
 		/*require 'models/login_model.php';
 		$model = new Login_Model();*/
 		
 		//print Hash::create('md5', 'test', HASH_PASSWORD_KEY);
 		
+		// not proper to call get session 
+		// @FIX: if(User::is_logged_in())
 		Session::init();
 		$logged = Session::get('loggedIn');
 		if($logged){
@@ -25,6 +33,9 @@ class Login extends Controller{
 		$this->view->render("login/index", true);
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	public function run(){
 	
 		$this->model->run();

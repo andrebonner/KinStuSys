@@ -1,5 +1,9 @@
-<?php 
+<?php
+// Boot Class 
 class Boot{
+	/** 
+	 * Initalizing Boot object Vars
+	 **/
 	function __construct(){
 		
 		$var = isset($_GET['var']) ? $_GET['var'] : null;
@@ -49,6 +53,9 @@ class Boot{
 		
 	}
 	
+	/**
+	 * presenting errors
+	 **/
 	function error(){
 		require 'controllers/error.php';
 		$controller = new Error();

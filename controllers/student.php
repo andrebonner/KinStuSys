@@ -2,9 +2,16 @@
 
 class Student extends Controller{
 
+	
+	/**
+	 * Initializing Student Controller
+	 **/
 	function __construct(){
 		parent::__construct();
 		//print "Index Page";
+		
+		// not proper to call get session 
+		// @FIX: if(User::is_logged_in())
 		Session::init();
 		$logged = Session::get('loggedIn');
 		if(!$logged){
@@ -12,10 +19,16 @@ class Student extends Controller{
 		}
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	public function xhrGetListings(){
 		$this->model->xhrGetListings();
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	function index(){
 		$this->view->studentList = $this->model->studentList();
 		$this->view->css = array('/student/css/flexigrid.pack.css');
@@ -25,11 +38,17 @@ class Student extends Controller{
 		$this->view->render("student/index");
 	}
 	
+	/**
+	 * @return nothing
+	 **/
 	function add(){
 		$this->view->data=array('title'=>'Add Student', 'description'=>'This is the add students page');
 		$this->view->render("student/add");
 	}
 
+	/**
+	 * @return nothing
+	 **/
 	function create(){
 			$data['firstname'] = $_POST['firstname'];
 			$data['lastname'] = $_POST['lastname'];
@@ -42,6 +61,10 @@ class Student extends Controller{
 			header('Location: '.URL.'/student');
 	}
 	
+	/**
+	 * @param integer $id The id of the student
+	 * @return nothing
+	 **/
 	function edit($id){
 		// fetch individual user
 		$this->view->student = $this->model->getStudent($id);
@@ -49,6 +72,11 @@ class Student extends Controller{
 		$this->view->render("student/edit");
 	}
 	
+	
+	/**
+	 * @param integer $id The id of the student
+	 * @return nothing
+	 **/
 	function editSave($id){
 	
 		$data['id'] = $id;
@@ -62,15 +90,23 @@ class Student extends Controller{
 		$data['exgrade'] = $_POST['exgrade'];
 		$data['address'] = $_POST['address'];
 			
-		// @TODO: Do your error checking!
+		// @TODO: Do error checking!
 			
 		$this->model->editSave($data);
 		header('Location: '.URL.'/student');
 	}
 	
+	/**
+	 * @param integer $id The id of the student
+	 * @return nothing
+	 **/
 	function delete($id){
-		
-			$this->model->delete($id);
-			header('Location: '.URL.'/student');
+		// not proper to call get session 
+		// @FIX: if(!current_user->is_admin())
+		if(Session::get('role') != 'administrator'){
+			return false;
+		}	
+		$this->model->delete($id);
+		header('Location: '.URL.'/student');
 	}
 }

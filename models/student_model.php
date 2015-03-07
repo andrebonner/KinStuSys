@@ -2,18 +2,28 @@
 
 class Student_Model extends Model{
 	
+	/**
+	 * Initializing Student Model
+	 **/
 	public function __construct(){
 		
 		parent::__construct();
 				
 	}
-	/*
-	public function xhrInsert(){
-		print $text = $_POST['text'];
-		$sth = $this->db->prepare('INSERT INTO student(text) VALUES (:text)');
-		$sth->execute(array(':text' => $text));
+	
+	// /**
+	 // * return nothing
+	 // **/
+	// public function xhrInsert(){
+		// print $text = $_POST['text'];
+		// $sth = $this->db->prepare('INSERT INTO student(text) VALUES (:text)');
+		// $sth->execute(array(':text' => $text));
 		
-	}*/
+	// }
+	
+	/**
+	 * @return nothing 
+	 **/
 	public function xhrGetListings(){
 		$page = isset($_POST['page']) ? $_POST['page'] : 1;
 		$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : 'id';
@@ -57,6 +67,10 @@ class Student_Model extends Model{
 		echo json_encode($data);
 		
 	}
+	
+	/**
+	 * @return array (return of query)
+	 **/
 	public function studentList(){
 		
 		
@@ -66,6 +80,10 @@ class Student_Model extends Model{
 		return $sth->fetchAll();
 	}
 
+	/**
+	 * @param array $data The array to create a new student record
+	 * @return nothing
+	 **/
 	public function create($data){
 		
 		$sth = $this->db->prepare("INSERT INTO students (firstname , lastname, sex, age) VALUES(:firstname , :lastname, :sex, :age)");
@@ -73,6 +91,10 @@ class Student_Model extends Model{
 	
 	}
 	
+	/**
+	 * @param integer $id The id of student
+	 * @return array (result of query)
+	 **/
 	public function getStudent($id){
 				
 		$sth = $this->db->prepare("SELECT id, firstname, middlename, lastname, sex, dateofbirth, age, grade, exgrade, address FROM students WHERE id=:id");
@@ -82,13 +104,22 @@ class Student_Model extends Model{
 		
 	}
 	
+	/**
+	 * @param array $data The array of student record to update
+	 * @return nothing
+	 **/
 	public function editSave($data){
 		$sth = $this->db->prepare("UPDATE students SET firstname = :firstname, middlename = :middlename, lastname = :lastname, sex =:sex, dateofbirth =:dateofbirth, age =:age, grade =:grade, exgrade =:exgrade, address =:address WHERE id = :id");
 		$sth->execute(array(':firstname' => $data['firstname'], ':middlename' => $data['middlename'], ':lastname' => $data['lastname'], ':sex' => $data['sex'], ':dateofbirth' => $data['dateofbirth'], ':age' => $data['age'], ':grade' => $data['grade'], ':exgrade' => $data['exgrade'], ':address' => $data['address'], ':id' => $data['id']));
 	}
 	
+	/**
+	 * @param integer $id The id student to delete
+	 * @return nothing (false only if not admin)
+	 **/
 	public function delete($id){
-	
+		// not proper to call get session 
+		// @FIX: if(!current_user->is_admin())
 		if(Session::get('role') != 'administrator'){
 			return false;
 		}
