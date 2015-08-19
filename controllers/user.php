@@ -10,7 +10,7 @@ class User extends Controller{
 		parent::__construct();
 		
 		// not proper to call get session 
-		// @FIX: if(!User::is_logged_in() || !current_user->is_admin())
+		// @FIX: if(!Session::is_logged_in() || !current_user->is_admin())
 		Session::init();
 		$logged = Session::get('loggedIn');
 		$role = Session::get('rolename');

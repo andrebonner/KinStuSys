@@ -10,7 +10,7 @@ class Index extends Controller{
 		//print "Index Page";
 		
 		// not proper to call get session 
-		// @FIX: if(User::is_logged_in()) 
+		// @FIX: if(Session::is_logged_in()) 
 		Session::init();
 		$logged = Session::get('loggedIn');
 		if(!$logged){

@@ -21,7 +21,7 @@ class Login extends Controller{
 		//print Hash::create('md5', 'test', HASH_PASSWORD_KEY);
 		
 		// not proper to call get session 
-		// @FIX: if(User::is_logged_in())
+		// @FIX: if(Session::is_logged_in())
 		Session::init();
 		$logged = Session::get('loggedIn');
 		if($logged){
